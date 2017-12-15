@@ -1,11 +1,14 @@
 // $(document).ready(function(){
 	console.log("link script js ok");
+	var cityArray = [];
 
 	$("input").change(function() {
 		var myRequest = $(this).val();
 		ajaxRequest(myRequest, function(res){ //test du callback
-			addElement(res);
+			cityArray.push(res);
+			switchElement(cityArray);
 		});
+		
 	})
 
 	function ajaxRequest(cityRequest, cb) {
@@ -36,15 +39,17 @@
 	};
 
 
-// });
-/**
-*
-*
-*/
-function addElement(myData) {
-	$(".content").html("");
-	for (var i in myData) {
-		$(".content").append("<div class=\"description\">" + i + " : " + myData[i] + "</div>");
+
+	function switchElement(cityArray) {
+		var newCity = cityArray[cityArray.length-1]
+		var lastCity = cityArray[cityArray.length-2]
+		$('#fiche2').html("");
+		for (var i in newCity) {
+			$('#fiche2').append("<div class=\"description\">" + i + " : " + newCity[i] + "</div>");
+		}
+		$('#fiche1').html("");
+		for (var i in lastCity) {
+			$('#fiche1').append("<div class=\"description\">" + i + " : " + lastCity[i] + "</div>");
+		}
 	}
-}
 
