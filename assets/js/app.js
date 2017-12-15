@@ -2,22 +2,27 @@
 	console.log("link script js ok");
 	var cityArray = [];
 
-	$("input").change(function() {
-		var myRequest = $(this).val();
-		ajaxRequest(myRequest, function(res){ //test du callback
+	$("input").click(function() {
+		$("input").val("");
+	})
+
+	$("#cityChoice").click(function() {
+		var myRequest = $("input").val();
+		// push la réponse Ajax dans l'array cityArray
+		meteoRequest(myRequest, function(res){ 
 			cityArray.push(res);
 			switchElement(cityArray);
 		});
-		
 	})
 
-	function ajaxRequest(cityRequest, cb) {
+	function meteoRequest(cityRequest, callback) {
 		$.ajax({
-			url : 'http://api.openweathermap.org/data/2.5/weather?q=' + cityRequest + '&units=metric&APPID=ee43646aad159fa17c9141272573d285', 
+			url : 'https://api.openweathermap.org/data/2.5/weather?q=' + cityRequest + '&units=metric&APPID=ee43646aad159fa17c9141272573d285', 
 			type : 'GET',
 			dataType: 'json',
 			success: function(res) {
-				myData = {
+				// on stocke les données dans un array...
+				var myData = {
 					"Ville": res.name,
 					"Longitude": res.coord.lon,
 					"Latitude": res.coord.lat,
@@ -27,7 +32,8 @@
 					"Température min":res.main.temp_min,
 					"Température max":res.main.temp_max,
 				};
-				cb(myData);
+				// qu'on retourne via le callback
+				callback(myData);
 			},
 			error: function(err) {
 				console.log(err);
@@ -41,8 +47,11 @@
 
 
 	function switchElement(cityArray) {
-		var newCity = cityArray[cityArray.length-1]
-		var lastCity = cityArray[cityArray.length-2]
+		console.log(cityArray.length);
+		var newCity = cityArray[cityArray.length-1];
+		var lastCity = cityArray[cityArray.length-2];
+		console.log(newCity);
+		console.log(lastCity);
 		$('#fiche2').html("");
 		for (var i in newCity) {
 			$('#fiche2').append("<div class=\"description\">" + i + " : " + newCity[i] + "</div>");

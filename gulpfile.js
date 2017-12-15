@@ -8,10 +8,9 @@ var reload = browserSync.reload;
 var scsslint = require('gulp-scss-lint');
 
 gulp.task('sass', function() {
-  return gulp.src('assets/scss/app.scss')
+  return gulp.src('assets/scss/*.scss')
     .pipe($.sass({
       includePaths: 'assets/scss',
-
     })
     .on('error', $.sass.logError))
     .pipe(gulp.dest('dist/css'))
