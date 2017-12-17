@@ -1,0 +1,76 @@
+$radiusBox: 3px;
+$borderBox: 1px solid grey;
+
+body {
+
+	font-family: 'Lato', sans-serif;
+	font-size: 14px;
+
+	.cadre {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #2EA664;
+		width: 770px;
+		padding: 10px;
+		border: 1px solid darkgrey;
+		box-shadow: 3px 3px 3px #aaa; 
+
+		input {
+			width: 407px;
+			height: 35px;
+			padding-left: 10px;
+			border: 1px solid lightgrey;
+			color: darkgrey;
+			border-radius: $radiusBox;
+		}
+
+		button {
+			width: 422px;
+			margin-top: 3px;
+		}
+
+
+		.results {
+			display: flex;
+			padding: 15px;
+
+			.mapCard {
+				display:flex;
+				margin: 1px;
+
+
+				#mapFrame1, #mapFrame2 {
+					height: 200px;
+					width: 170px;
+					margin: 5px;
+					border: 1px solid black;
+					background-color: lightgrey;
+					border: $borderBox;
+					border-radius: $radiusBox;
+				}
+
+				.card {
+					display: flex;
+					background-color: white;
+					width: 370px;
+					height: 220px;
+					padding : 3px;
+					margin: 3px;
+					border: $borderBox;
+					border-radius: $radiusBox;
+
+
+					ul {
+						margin-left: -8px;
+						line-height: 1.5em;
+					}
+				}
+			}
+		}
+
+
+		
+
+	}
+}
