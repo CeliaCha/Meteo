@@ -19,3 +19,8 @@ body .cadre {
       width: 200px;
       height: 250px;
       margin: 10px; }
+  body .cadre #mapid {
+    height: 250px;
+    width: 400px;
+    border: 1px solid black;
+    background-color: lightgrey; }
