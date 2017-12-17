@@ -1,4 +1,4 @@
-Lien gh-pages : https://github.com/CeliaCha/Meteo/
+Lien gh-pages : https://celiacha.github.io/Meteo/
 
 
 # AJAX Request
