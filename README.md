@@ -1,4 +1,4 @@
-Lien gh-pages : https://github.com/CeliaCha/jquery-switcher/tree/Meteo
+Lien gh-pages : https://github.com/CeliaCha/Meteo/
 
 
 # AJAX Request
