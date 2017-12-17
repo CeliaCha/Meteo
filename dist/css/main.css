@@ -2,25 +2,43 @@ body .cadre {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: cyan;
-  width: 500px;
-  padding: 10px; }
+  background-color: #2EA664;
+  width: 770px;
+  padding: 10px;
+  border: 1px solid darkgrey;
+  box-shadow: 3px 3px 3px #aaa; }
   body .cadre input {
     width: 420px;
-    height: 30px;
+    height: 35px;
+    padding: 5px;
     border: 1px solid lightgrey;
-    color: darkgrey; }
+    color: darkgrey;
+    border-radius: 3px; }
   body .cadre button {
-    width: 420px; }
-  body .cadre #main {
-    display: flex; }
-    body .cadre #main .ui.card {
-      background-color: white;
-      width: 200px;
-      height: 250px;
-      margin: 10px; }
-  body .cadre #mapid {
-    height: 250px;
-    width: 400px;
-    border: 1px solid black;
-    background-color: lightgrey; }
+    width: 422px;
+    margin-top: 3px; }
+  body .cadre .results {
+    display: flex;
+    padding: 15px; }
+    body .cadre .results .mapCard {
+      display: flex;
+      margin: 1px; }
+      body .cadre .results .mapCard #mapFrame1, body .cadre .results .mapCard #mapFrame2 {
+        height: 200px;
+        width: 170px;
+        margin: 5px;
+        border: 1px solid black;
+        background-color: lightgrey;
+        border: 1px solid grey;
+        border-radius: 3px; }
+      body .cadre .results .mapCard .card {
+        display: flex;
+        background-color: white;
+        width: 370px;
+        height: 220px;
+        padding: 3px;
+        margin: 3px;
+        border: 1px solid grey;
+        border-radius: 3px; }
+        body .cadre .results .mapCard .card ul {
+          margin-left: -8px; }

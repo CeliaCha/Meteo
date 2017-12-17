@@ -1,19 +1,20 @@
-console.log("link script js ok");
+$(document).ready(function(){
 
+var userRequest;
 var citiesStorage = localStorage; // historique des recherches
 var countCities = 0; // compteur pour générer les clés du localStorage
 var twoLastRequests = [""]; // stockage des données complètes des deux dernières villes
-var cityMap;
+var cityMap, lastCityMap; // API Leaflet
 
 // LISTENERS :
 $("input").click(function() {
 	$(this).val("");
 	$(this).css("color", "black");
-
 })
 
+
 $("#cityChoice").click(function() {
-	var userRequest = $("input").val();
+	userRequest = $("input").val();
 	meteoRequest(userRequest,updateView);
 })
 
@@ -26,19 +27,18 @@ function meteoRequest(userRequest, callback) {
 		dataType: 'json',
 		success: function(res) {
 		var ajaxRes = {
-			City : res.name,
+			Ville : res.name,
 			Longitude : res.coord.lon,
 			Latitude : res.coord.lat,
-			WindSpeed: res.wind.speed,
-			Humidity: res.main.humidity,
-			Pressure: res.main.pressure,
+			Humidité: res.main.humidity + ' %',
+			Pression: res.main.pressure + ' hpa',
 			Temp_min: res.main.temp_min + ' C°',
 			Temp_max: res.main.temp_max + ' C°',
 		};
 		callback(ajaxRes);
 		},
 		error: function(err) {
-			alert('Echec de la requête.');
+			alert('Echec de la requête ou requête invalide.');
 			console.log(err);
 		},
 		complete : function() { 
@@ -52,36 +52,48 @@ function updateView(ajaxRes) {
 
 	// actualisation du localStorage et du tableau twoLastRequests :
 	countCities++;
-	citiesStorage.setItem(countCities+'city', ajaxRes.City);
+	citiesStorage.setItem(countCities+'city', ajaxRes.Ville);
 	if (twoLastRequests.length > 1) {twoLastRequests.splice(0, 1);} // supprime du tableau l'avant-dernière requête 
 	twoLastRequests.push(ajaxRes);
 
-	// actualisation des fiches :
-	var newCity = twoLastRequests[twoLastRequests.length-1];
-	var lastCity = twoLastRequests[twoLastRequests.length-2];
-	$('#fiche2').html("");
+	// actualisation des cartes :
+	var newCity = twoLastRequests[twoLastRequests.length-1], lastCity = twoLastRequests[twoLastRequests.length-2];
+	$('#card2 ul').empty();
 	for (var i in newCity) {
-		$('#fiche2').append("<div class=\"description\">" + i + " : " + newCity[i] + "</div>");
+		$('#card2 ul').append("<li>" + i + " : " + newCity[i] + "</li>");
 	}
-	$('#fiche1').html("");
+	$('#card1 ul').empty();
 	for (var i in lastCity) {
-		$('#fiche1').append("<div class=\"description\">" + i + " : " + lastCity[i] + "</div>");
+		$('#card1 ul').append("<li>" + i + " : " + lastCity[i] + "</li>");
 	};
 
-	// actualisation de la map :
+	// actualisation des maps :
+	// nouveau map :
 	if (cityMap != undefined) {cityMap.remove();}
-	cityMap = L.map('mapid').setView([newCity.Latitude, newCity.Longitude], 10);
+	cityMap = L.map('mapFrame2').setView([newCity.Latitude, newCity.Longitude], 12);
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		maxZoom: 18,
 		id: 'mapbox.streets',
 		accessToken: 'pk.eyJ1IjoiY2VsaWFjaGEiLCJhIjoiY2piYW9kb2NjMHU5eTJ3bm51NDYwNm96YyJ9.bd3WcQc8BlJc-P7hXQUeVA'
 	}).addTo(cityMap);
 	L.marker([newCity.Latitude, newCity.Longitude]).addTo(cityMap);
+	// map précédent :
+	if (lastCity != "" && lastCity != undefined) {
+		if (lastCityMap != undefined) {lastCityMap.remove();}
+		lastCityMap = L.map('mapFrame1').setView([lastCity.Latitude, lastCity.Longitude], 12);
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			maxZoom: 18,
+			id: 'mapbox.streets',
+			accessToken: 'pk.eyJ1IjoiY2VsaWFjaGEiLCJhIjoiY2piYW9kb2NjMHU5eTJ3bm51NDYwNm96YyJ9.bd3WcQc8BlJc-P7hXQUeVA'
+		}).addTo(lastCityMap);
+		L.marker([lastCity.Latitude, lastCity.Longitude]).addTo(lastCityMap);
+	}
+
+	// Réinitialisation du champ de recherche et de userRequest
+	$("input").val("Rechercher une ville");
+	$("input").css("color", "darkgrey");
+	userRequest = undefined;
+
 }
 
-
-// DEV :
-function log(stuff) {
-	console.log(stuff);
-}
+});
