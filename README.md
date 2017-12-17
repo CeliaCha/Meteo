@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 Lien projet : https://celiacha.github.io/Meteo/ 
 
-
-=======
-Lien gh-pages : https://github.com/CeliaCha/Meteo/
->>>>>>> master
 
 
 # AJAX Request
