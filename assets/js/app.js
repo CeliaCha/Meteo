@@ -93,7 +93,6 @@ function updateView(ajaxRes) {
 	$("input").val("Rechercher une ville");
 	$("input").css("color", "darkgrey");
 	userRequest = undefined;
-
 }
 
 });
