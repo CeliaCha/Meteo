@@ -1,3 +1,6 @@
+Lien gh-pages : https://github.com/CeliaCha/jquery-switcher/tree/Meteo
+
+
 # AJAX Request
 
 ### Objectif
